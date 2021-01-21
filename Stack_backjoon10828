@@ -1,0 +1,22 @@
+number=int(input())
+Stack=[]
+a=list(input().split() for i in range(number))
+for i in range(number):
+    a[i][0]
+    if a[i][0]=='top':
+        if Stack==[]:
+            print(-1)
+        else: print(Stack[-1])
+    elif a[i][0]=='pop':
+        if Stack==[]:
+            print(-1)
+        else:print(Stack.pop())
+    elif a[i][0]=='size':
+        print(len(Stack))
+    elif a[i][0]=='empty':
+        if Stack==[]:
+            print(1)
+        else:
+            print(0)
+    else:
+        Stack.append(a[i][1])

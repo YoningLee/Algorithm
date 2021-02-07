@@ -1,50 +1,73 @@
 class Node:
-    def __init__(self,value):
+    def __init__(self,value, left, right):
         self.value = value
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
 class Queue:
     def __init__(self):
-        self.data=[]
+        self.data = []
+
+    def isEmpty(self):
+        if len(self.data)==0:
+            return True
+        else:
+            return False
+    def enqueue(self, value):
+        return self.data.append(value)
+
+    def dequeue(self):
+        return self.data.pop(0)
+
+    def peek(self):
+        return self.data[0]
 
 class BinaryTree:
     def __init__(self):
-        self.root = Node(None)
-    def insert(self, root, left, right):
-        self.current_node = self.root
-        depth=0
+        self.root = Node(value, left, right)
+    def insert(self, newnode, start):
+        self.curr = start
         while True:
-            if(self.current_node.value == None):
-                self.current_node.value = root
-                self.current_node.left = left
-                self.current_node.right = right
+            if self.curr.value == None:
+                self.curr.value = newnode.value
+                self.curr.left = newnode.left
+                self.curr.right = newnode.right
                 break
-            elif((self.current_node.left.value != root)and(self.current_node.right.value != root)):
-                #이진트리에 root과 같은 값을 가진 노드 찾기
-
             else:
-                if(self.current_node.left.value == root):
-                    self.current_node = self.current_node.left
-                    self.current_node.left = left
-                    self.current_node.right = right
-                    break
-                elif(self.current_node.right.value == root):
-                    self.current_node = self.current_node.right
-                    self.current_node.left = left
-                    self.current_node.right = right
-                    break
-    def search(self, value):
-        self.current_node = self.root
-
-
+                self.curr.left = newnode.left
+                self.curr.right = newnode.right
+                break
+    def currSearch(self,keynode):
+        self.curr = self.root
+        if self.curr.value == keynode.value:
+            return self.curr
+        else:
+            if self.curr.left:
+                if self.curr.left == keynode.value:
+                    return self.curr.left
+                else:
+                    self.curr.left.currSearch(keynode)
 num = int(input())
 tree = []
+Q = Queue()
 for i in range(num):
-    list = []
-    list = (str(x) for x in input().split())
-    tree.append(list)
-Q=[]Queue
+    x, y, z = map(str, input().split( ))
+    if y == '.':
+        y = None
+    if z == '.':
+        y = None
+    node = Node(x, y, z)
+    tree.append(node)
 BT = BinaryTree()
+i=0
 for i in range(num):
-    BT.insert(tree[i][0], tree[i][1], tree[i][2])
-첫 번째 목표: 이진트리 생성하기
+    if not Q.isEmpty():
+        start = Q.dequeue()
+    else:
+        start = Node(None)
+
+    node = tree[i]
+    BT.insert(node, start)
+    if node.left != None:
+        Q.enqueue(Node(node.left))
+    if node.right != None:
+        Q.enqueue(Node(node.right))

@@ -6,15 +6,14 @@ class Node:
 # keynumber와 같은 값을 가지는 노드의 짝꿍을 찾아서 딕셔너리에 저장
 def search(keynumber):
     for i in range(num-1):
-        print(keynumber, tree[i].first)
+
         if keynumber == tree[i].first:
-            print(keynumber, tree[i].first)
-            dic[keynumber] = tree[i].second
-        print(keynumber, tree[i].second)
+            if dic[keynumber] != 1:
+                dic[keynumber].append(tree[i].second)
+
         if keynumber == tree[i].second:
-            print(keynumber, tree[i].second)
-            dic[keynumber] = tree[i].first
-    print(dic)
+            if dic[keynumber] != 1:
+                dic[keynumber].append(tree[i].first)
 
 num = int(input())
 tree = []
@@ -25,6 +24,11 @@ for i in range(num-1):
 
 #i값을 가진 자식의 부모노드 추리기
 dic = {}
-for key in range(2,num+1):
+for key in range(2, num+1):
+    dic[key] = []
     search(key)
+    if len(dic[key]) != 1:
+        if 1 in dic[key]:
+            dic[key] = [1]
 print(dic)
+#부모 1개로 추리기

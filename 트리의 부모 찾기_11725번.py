@@ -1,34 +1,29 @@
-class Node:
-    def __init__(self,x,y):
-        self.first = x
-        self.second = y
-
-# keynumber와 같은 값을 가지는 노드의 짝꿍을 찾아서 딕셔너리에 저장
-def search(keynumber):
-    for i in range(num-1):
-
-        if keynumber == tree[i].first:
-            if dic[keynumber] != 1:
-                dic[keynumber].append(tree[i].second)
-
-        if keynumber == tree[i].second:
-            if dic[keynumber] != 1:
-                dic[keynumber].append(tree[i].first)
-
-num = int(input())
-tree = []
-for i in range(num-1):
-    x, y= map(int, input().split())
-    node = Node(x,y)
-    tree.append(node)
-
-#i값을 가진 자식의 부모노드 추리기
-dic = {}
-for key in range(2, num+1):
-    dic[key] = []
-    search(key)
-    if len(dic[key]) != 1:
-        if 1 in dic[key]:
-            dic[key] = [1]
-print(dic)
-#부모 1개로 추리기
+import collections
+class Node():
+    def __init__(self, data):
+        self.data = data
+        self.child = []
+        self.parent = None
+N=int(input())
+tree = {}
+for i in range(N-1):
+    n1,n2=map(int, input().split())
+    if n1 not in tree:
+        tree[n1]=Node(n1)
+    tree[n1].child.append(n2)
+    #n2가 tree의 key값인지 검사
+    if n2 not in tree:
+        tree[n2]=Node(n2)
+    tree[n2].child.append(n1)
+queue = collections.deque([1])
+while len(queue)!=0:
+    front=queue.popleft()
+    if tree[front].child==[]:
+        continue
+    else:
+        for ch in tree[front].child:
+            if ch!=tree[front].parent:
+                tree[ch].parent=front
+                queue.append(ch)
+for i in range(2,N+1):
+    print(tree[i].parent)
